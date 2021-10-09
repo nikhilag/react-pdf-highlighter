@@ -14,8 +14,8 @@
   },
   "scripts": {
     "dev": "npm run start",
-    "start": "GENERATE_SOURCEMAP=false react-scripts start",
-    "build": "GENERATE_SOURCEMAP=false react-scripts build",
+    "start": "cross-env GENERATE_SOURCEMAP=false react-scripts start",
+    "build": "cross-env GENERATE_SOURCEMAP=false react-scripts build",
     "eject": "react-scripts eject",
     "postinstall": "npm run sync-source-files",
     "clean": "rm -rf ./src/{style,index.tsx,App.tsx,Sidebar.tsx,Spinner.tsx,test-highlights.ts}",

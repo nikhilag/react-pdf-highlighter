@@ -149,7 +149,11 @@ class App extends Component<{}, State> {
             position: "relative",
           }}
         >
-          <PdfLoader url={url} beforeLoad={<Spinner />}>
+          <PdfLoader
+            url={url}
+            beforeLoad={<Spinner />}
+            onLoad={(pdfDocument) => console.log("PDF Loaded")}
+          >
             {(pdfDocument) => (
               <PdfHighlighter
                 pdfDocument={pdfDocument}
