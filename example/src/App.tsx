@@ -44,7 +44,7 @@ const HighlightPopup = ({
     </div>
   ) : null;
 
-const PRIMARY_PDF_URL = "https://arxiv.org/pdf/1708.08021.pdf";
+const PRIMARY_PDF_URL = "https://arxiv.org/pdf/1708.08021.pdf"; //  For barcode testing - "https://demo.jaspersoft.com/jrio/rest_v2/reports/samples/reports/Barcode4JReport.pdf";
 const SECONDARY_PDF_URL = "https://arxiv.org/pdf/1604.02480.pdf";
 
 const searchParams = new URLSearchParams(document.location.search);
@@ -152,6 +152,48 @@ class App extends Component<{}, State> {
           <PdfLoader
             url={url}
             beforeLoad={<Spinner />}
+            barcodeProps={{
+              callback: (result) =>
+                console.log("Result codes = ", result.codesDetailed),
+              decodeConfig: {
+                scale: {
+                  once: true,
+                  value: 3,
+                  start: 3,
+                  step: 0.6,
+                  stop: 4.8,
+                },
+                resultOpts: {
+                  singleCodeInPage: false,
+                  multiCodesInPage: true,
+                  maxCodesInPage: 10,
+                },
+                patches: ["x-small", "small", "medium"],
+                improve: true,
+                noisify: true,
+                quagga: {
+                  inputStream: {},
+                  locator: {
+                    halfSample: false,
+                  },
+                  decoder: {
+                    readers: [
+                      "code_128_reader",
+                      "code_39_reader",
+                      "code_39_vin_reader",
+                      "ean_reader",
+                      "ean_8_reader",
+                      "upc_reader",
+                      "upc_e_reader",
+                      "i2of5_reader",
+                      "2of5_reader",
+                    ],
+                    multiple: true,
+                  },
+                  locate: true,
+                },
+              },
+            }}
             onLoad={(pdfDocument) => console.log("PDF Loaded")}
           >
             {(pdfDocument) => (

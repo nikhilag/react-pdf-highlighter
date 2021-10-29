@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 
 import { getDocument, GlobalWorkerOptions } from "pdfjs-dist/legacy/build/pdf";
+import { PDFBarcodeJs } from "../PdfBarcode";
 import type { PDFDocumentProxy } from "pdfjs-dist/types/display/api";
 
 interface Props {
@@ -15,6 +16,7 @@ interface Props {
   onLoad?: (pdfDocument: PDFDocumentProxy) => void;
   cMapUrl?: string;
   cMapPacked?: boolean;
+  barcodeProps?: { decodeConfig: any; callback: (result: any) => any };
 }
 
 interface State {
@@ -86,6 +88,13 @@ export class PdfLoader extends Component<Props, State> {
         }).promise.then((pdfDocument) => {
           if (this.props.onLoad) {
             this.props.onLoad(pdfDocument);
+            if (this.props.barcodeProps) {
+              PDFBarcodeJs.decodeDocument(
+                pdfDocument,
+                this.props.barcodeProps.decodeConfig,
+                this.props.barcodeProps.callback
+              );
+            }
           }
           this.setState({ pdfDocument });
         });
