@@ -17,6 +17,7 @@ interface Props {
     text: string;
   };
   isScrolledTo: boolean;
+  highlightColor?: { default: string; onScroll: string };
 }
 
 export class Highlight extends Component<Props> {
@@ -26,6 +27,10 @@ export class Highlight extends Component<Props> {
       onClick,
       onMouseOver,
       onMouseOut,
+      highlightColor = {
+        default: "rgba(252, 232, 151, 1.0)",
+        onScroll: "#ff4141",
+      },
       comment,
       isScrolledTo,
     } = this.props;
@@ -35,6 +40,9 @@ export class Highlight extends Component<Props> {
     return (
       <div
         className={`Highlight ${isScrolledTo ? "Highlight--scrolledTo" : ""}`}
+        style={{
+          background: highlightColor.default,
+        }}
       >
         {comment ? (
           <div
@@ -54,7 +62,11 @@ export class Highlight extends Component<Props> {
               onMouseOut={onMouseOut}
               onClick={onClick}
               key={index}
-              style={rect}
+              style={Object.assign(rect, {
+                background: isScrolledTo
+                  ? highlightColor.onScroll
+                  : highlightColor.default,
+              })}
               className={`Highlight__part`}
             />
           ))}

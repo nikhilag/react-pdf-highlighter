@@ -237,6 +237,10 @@ class App extends Component<{}, State> {
 
                   const component = isTextHighlight ? (
                     <Highlight
+                      highlightColor={{
+                        default: "lightgreen",
+                        onScroll: "red",
+                      }}
                       isScrolledTo={isScrolledTo}
                       position={highlight.position}
                       comment={highlight.comment}
@@ -244,6 +248,10 @@ class App extends Component<{}, State> {
                   ) : (
                     <AreaHighlight
                       isScrolledTo={isScrolledTo}
+                      highlightColor={{
+                        default: "lightgreen",
+                        onScroll: "red",
+                      }}
                       highlight={highlight}
                       onChange={(boundingRect) => {
                         this.updateHighlight(
